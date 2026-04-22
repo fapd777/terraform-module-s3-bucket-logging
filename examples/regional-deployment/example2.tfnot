@@ -52,13 +52,13 @@ module "iam_role_s3" {
   create_role       = true
   role_requires_mfa = false #No MFA since it's a service
 
-  role_name = "${var.name_prefix}-s3-central-replication${local.name_suffix}" #The assuming account matches it based upon name
+  role_name = "${var.name_prefix}-s3-central-replication" #The assuming account matches it based upon name
 
   custom_role_policy_arns = [
     aws_iam_policy.s3_role_assumption.arn
   ]
 
   tags = {
-    "Name" = "${var.name_prefix}-s3-central-replication${local.name_suffix}"
+    "Name" = "${var.name_prefix}-s3-central-replication"
   }
 }
