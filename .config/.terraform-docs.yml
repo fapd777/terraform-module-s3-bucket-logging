@@ -1,0 +1,73 @@
+version: ""
+
+formatter: markdown table
+
+name: terraform-module-s3-bucket-logging
+
+content: |-
+  {{ .Header }}
+
+  # terraform-aws-s3-bucket-logging
+
+  GitHub: [fapd777/terraform-module-s3-bucket-logging](https://github.com/fapd777/terraform-module-s3-bucket-logging)
+
+  This Terraform module creates a centralized s3 bucket for logging in the account that can later be configured for centralized logging.
+
+  ### This module configures a bucket with:
+  - Server Side Encryption (Not KMS)
+  - Requires encrypted transit
+
+  ### Example - Simple
+
+  ```hcl
+  {{ include "examples/simple-deployment/example1.tfnot" }}
+  ```
+
+  ### Example - Remote Logging
+
+  ```hcl
+  {{ include "examples/remote-logging-deployment/example1.tfnot" }}
+  ```
+
+  ### Example - Regional
+
+  ```hcl
+  {{ include "examples/regional-deployment/example1.tfnot" }}
+  ```
+
+  ### Example - Regional
+  Below is an example of the required source IAM policy to coordinate making this work
+
+  ```hcl
+  {{ include "examples/regional-deployment/example2.tfnot" }}
+  ```
+
+  ---
+
+  {{ .Requirements }}
+
+  {{ .Resources }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
+
+  ---
+
+  ## Notes
+  Note, manual changes to the README will be overwritten when the documentation is updated. To update the documentation, run `terraform-docs -c .config/.terraform-docs.yml .`
+
+sections:
+  show:
+    - requirements
+    - resources
+    - inputs
+    - outputs
+
+sort:
+  enabled: true
+  by: name
+
+output:
+  file: README.md
+  mode: replace
