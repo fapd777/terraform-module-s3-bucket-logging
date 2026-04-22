@@ -39,7 +39,6 @@ module "s3_bucket_logging" {
 module "s3_bucket_logging_us_east_2" {
   source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
   name_prefix = var.name_prefix
-  name_suffix = "${local.name_suffix}-us-east-2"
   input_tags  = merge(local.common_tags, {})
   providers = {
     aws = aws.us-east-2
@@ -106,14 +105,14 @@ module "iam_role_s3" {
   create_role       = true
   role_requires_mfa = false #No MFA since it's a service
 
-  role_name = "${var.name_prefix}-s3-central-replication${local.name_suffix}" #The assuming account matches it based upon name
+  role_name = "${var.name_prefix}-s3-central-replication" #The assuming account matches it based upon name
 
   custom_role_policy_arns = [
     aws_iam_policy.s3_role_assumption.arn
   ]
 
   tags = {
-    "Name" = "${var.name_prefix}-s3-central-replication${local.name_suffix}"
+    "Name" = "${var.name_prefix}-s3-central-replication"
   }
 }
 ```
@@ -151,7 +150,6 @@ module "iam_role_s3" {
 | <a name="input_input_tags"></a> [input\_tags](#input\_input\_tags) | Map of tags to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_logging_account_id"></a> [logging\_account\_id](#input\_logging\_account\_id) | Logging Account Number | `string` | `""` | no |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | String to prefix on object names | `string` | n/a | yes |
-| <a name="input_name_suffix"></a> [name\_suffix](#input\_name\_suffix) | String to append to object names. This is optional, so start with dash if using | `string` | `""` | no |
 | <a name="input_replication_dest_storage_class"></a> [replication\_dest\_storage\_class](#input\_replication\_dest\_storage\_class) | The storage class to send replicated objects (https://docs.aws.amazon.com/AmazonS3/latest/API/API_Transition.html#AmazonS3-Type-Transition-StorageClass) | `string` | `"STANDARD_IA"` | no |
 | <a name="input_s3_destination_bucket_name"></a> [s3\_destination\_bucket\_name](#input\_s3\_destination\_bucket\_name) | Centralized Logging Bucket Name | `string` | `""` | no |
 | <a name="input_transition_expiration"></a> [transition\_expiration](#input\_transition\_expiration) | Number of days before expiring data completely | `string` | `"2557"` | no |
