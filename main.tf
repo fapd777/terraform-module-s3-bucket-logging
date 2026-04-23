@@ -147,7 +147,7 @@ data "aws_iam_policy_document" "bucket_policy" {
 
 #tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "bucket" {
-  bucket = "${var.name_prefix}-logging${var.name_suffix}"
+  bucket = "${var.name_prefix}-logging-${var.name_suffix}"
 
   tags = local.common_tags
 }
@@ -227,7 +227,7 @@ resource "aws_s3_bucket_replication_configuration" "replication" {
   bucket = aws_s3_bucket.bucket.id
 
   rule {
-    id     = "${var.name_prefix}-replication${var.name_suffix}"
+    id     = "${var.name_prefix}-replication-${var.name_suffix}"
     status = "Enabled"
     destination {
       bucket        = "arn:aws:s3:::${var.s3_destination_bucket_name}"
