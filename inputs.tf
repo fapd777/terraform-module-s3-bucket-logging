@@ -77,7 +77,7 @@ variable "name_suffix" {
 variable "transition_expiration" {
   description = "Number of days before expiring data completely"
   type        = string
-  default     = "2557"
+  default     = "732"
 }
 
 variable "transition_glacier" {
