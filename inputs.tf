@@ -68,6 +68,12 @@ variable "s3_destination_bucket_name" {
   default     = ""
 }
 
+variable "name_suffix" {
+  description = "String to append to object names. This is optional, so start with dash if using"
+  type        = string
+  default     = ""
+}
+
 variable "transition_expiration" {
   description = "Number of days before expiring data completely"
   type        = string
