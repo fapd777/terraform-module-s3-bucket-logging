@@ -15,10 +15,10 @@ This Terraform module creates a centralized s3 bucket for logging in the account
 
 ```hcl
 module "s3_bucket_logging" {
-  source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
-  name_prefix        = var.name_prefix
-  input_tags         = local.common_tags
-  versioning_enabled = true #Enabled by default
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
+  name_prefix = var.name_prefix
+  name_suffix = var.region
+  input_tags  = local.common_tags
 }
 ```
 
@@ -28,17 +28,18 @@ module "s3_bucket_logging" {
 module "s3_bucket_logging" {
   source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
   name_prefix        = var.name_prefix
+  name_suffix        = var.region
   input_tags         = local.common_tags
-  versioning_enabled = true #Enabled by default
 }
 ```
 
 ### Example - Regional
 
 ```hcl
-module "s3_bucket_logging_us_east_2" {
-  source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
+module "s3_bucket_logging" {
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
   name_prefix = var.name_prefix
+  name_suffix = var.region
   input_tags  = merge(local.common_tags, {})
   providers = {
     aws = aws.us-east-2
