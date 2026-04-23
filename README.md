@@ -151,6 +151,7 @@ module "iam_role_s3" {
 | <a name="input_input_tags"></a> [input\_tags](#input\_input\_tags) | Map of tags to apply to resources | `map(string)` | `{}` | no |
 | <a name="input_logging_account_id"></a> [logging\_account\_id](#input\_logging\_account\_id) | Logging Account Number | `string` | `""` | no |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | String to prefix on object names | `string` | n/a | yes |
+| <a name="input_name_suffix"></a> [name\_suffix](#input\_name\_suffix) | String to append to object names. This is optional, so start with dash if using | `string` | `""` | no |
 | <a name="input_replication_dest_storage_class"></a> [replication\_dest\_storage\_class](#input\_replication\_dest\_storage\_class) | The storage class to send replicated objects (https://docs.aws.amazon.com/AmazonS3/latest/API/API_Transition.html#AmazonS3-Type-Transition-StorageClass) | `string` | `"STANDARD_IA"` | no |
 | <a name="input_s3_destination_bucket_name"></a> [s3\_destination\_bucket\_name](#input\_s3\_destination\_bucket\_name) | Centralized Logging Bucket Name | `string` | `""` | no |
 | <a name="input_transition_expiration"></a> [transition\_expiration](#input\_transition\_expiration) | Number of days before expiring data completely | `string` | `"2557"` | no |
