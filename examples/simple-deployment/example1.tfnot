@@ -1,6 +1,6 @@
 module "s3_bucket_logging" {
-  source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
-  name_prefix        = var.name_prefix
-  input_tags         = local.common_tags
-  versioning_enabled = true #Enabled by default
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
+  name_prefix = var.name_prefix
+  name_suffix = var.region
+  input_tags  = local.common_tags
 }

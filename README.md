@@ -15,10 +15,10 @@ This Terraform module creates a centralized s3 bucket for logging in the account
 
 ```hcl
 module "s3_bucket_logging" {
-  source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
-  name_prefix        = var.name_prefix
-  input_tags         = local.common_tags
-  versioning_enabled = true #Enabled by default
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
+  name_prefix = var.name_prefix
+  name_suffix = var.region
+  input_tags  = local.common_tags
 }
 ```
 
@@ -28,18 +28,18 @@ module "s3_bucket_logging" {
 module "s3_bucket_logging" {
   source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
   name_prefix        = var.name_prefix
+  name_suffix        = var.region
   input_tags         = local.common_tags
-  versioning_enabled = true #Enabled by default
 }
 ```
 
 ### Example - Regional
 
 ```hcl
-module "s3_bucket_logging_us_east_2" {
-  source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
+module "s3_bucket_logging" {
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
   name_prefix = var.name_prefix
-  name_suffix = "${local.name_suffix}-us-east-2"
+  name_suffix = var.region
   input_tags  = merge(local.common_tags, {})
   providers = {
     aws = aws.us-east-2
@@ -106,14 +106,14 @@ module "iam_role_s3" {
   create_role       = true
   role_requires_mfa = false #No MFA since it's a service
 
-  role_name = "${var.name_prefix}-s3-central-replication${local.name_suffix}" #The assuming account matches it based upon name
+  role_name = "${var.name_prefix}-s3-central-replication" #The assuming account matches it based upon name
 
   custom_role_policy_arns = [
     aws_iam_policy.s3_role_assumption.arn
   ]
 
   tags = {
-    "Name" = "${var.name_prefix}-s3-central-replication${local.name_suffix}"
+    "Name" = "${var.name_prefix}-s3-central-replication"
   }
 }
 ```
