@@ -25,6 +25,8 @@ module "s3_bucket_logging" {
 }
 ```
 
+Set the `ref` parameter at the end of the source URL with the latest version of the Terraform module.
+
 ---
 
 ## Requirements

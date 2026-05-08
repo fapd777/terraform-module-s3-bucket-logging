@@ -23,6 +23,8 @@ content: |-
   {{ include "examples/simple-deployment/s3-bucket-logging.tfnot" }}
   ```
 
+  Set the `ref` parameter at the end of the source URL with the latest version of the Terraform module.
+
   ---
 
   {{ .Requirements }}
