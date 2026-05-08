@@ -1,120 +1,27 @@
 <!-- BEGIN_TF_DOCS -->
-
-
-# terraform-aws-s3-bucket-logging
+# Terraform-module-s3-bucket-logging
 
 GitHub: [fapd777/terraform-module-s3-bucket-logging](https://github.com/fapd777/terraform-module-s3-bucket-logging)
 
-This Terraform module creates a centralized s3 bucket for logging in the account that can later be configured for centralized logging.
+This Terraform module creates an S3 bucket for logging in the AWS account, which can later be configured for centralized logging.
 
 ### This module configures a bucket with:
 - Server Side Encryption (Not KMS)
 - Requires encrypted transit
 
-### Example - Simple
+### Module utilization example
+
+Create an `s3-bucket-logging.tf` file in the Terraform root directory with the following configuration:
 
 ```hcl
+################################################################################
+# Amazon S3 Bucket for centralized log storage. 
+################################################################################
+
 module "s3_bucket_logging" {
-  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
-  name_prefix = var.name_prefix
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git?ref=v1.0.0"
+  name_prefix = var.aws_account_id
   name_suffix = var.region
-  input_tags  = local.common_tags
-}
-```
-
-### Example - Remote Logging
-
-```hcl
-module "s3_bucket_logging" {
-  source             = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
-  name_prefix        = var.name_prefix
-  name_suffix        = var.region
-  input_tags         = local.common_tags
-}
-```
-
-### Example - Regional
-
-```hcl
-module "s3_bucket_logging" {
-  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git"
-  name_prefix = var.name_prefix
-  name_suffix = var.region
-  input_tags  = merge(local.common_tags, {})
-  providers = {
-    aws = aws.us-east-2
-  }
-  versioning_enabled = true #Enabled by default
-}
-```
-
-### Example - Regional
-Below is an example of the required source IAM policy to coordinate making this work
-
-```hcl
-data "aws_iam_policy_document" "s3_replication" {
-  statement {
-    sid = "AllowS3SourceReplication"
-    actions = [
-      "s3:GetObjectVersionForReplication",
-      "s3:GetObjectVersionAcl",
-      "s3:GetObjectVersionTagging"
-    ]
-    resources = [
-      "arn:aws:s3:::${module.s3_bucket_logging_us_east_1.bucket_id}/*"
-    ]
-  }
-  statement {
-    sid = "AllowS3SourceReplicationMetadata"
-    actions = [
-      "s3:ListBucket",
-      "s3:GetReplicationConfiguration"
-    ]
-    resources = [
-      "arn:aws:s3:::${module.s3_bucket_logging_us_east_1.bucket_id}"
-    ]
-  }
-
-  //Destination bucket objects
-  statement {
-    sid = "AllowS3SourceReplicationObjects"
-    actions = [
-      "s3:ReplicateObject",
-      "s3:ReplicateDelete",
-      "s3:ReplicateTags",
-      "s3:ObjectOwnerOverrideToBucketOwner"
-    ]
-    resources = [
-      "arn:aws:s3:::${var.s3_destination_bucket_name}/*"
-    ]
-  }
-}
-
-resource "aws_iam_policy" "s3_role_assumption" {
-  name        = "S3-replication-policy"
-  description = "Policy to allow S3 role assumption for centralized logging"
-  policy      = data.aws_iam_policy_document.s3_replication.json
-}
-
-
-module "iam_role_s3" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
-  version = "~> 4"
-
-  trusted_role_services = ["s3.amazonaws.com"]
-
-  create_role       = true
-  role_requires_mfa = false #No MFA since it's a service
-
-  role_name = "${var.name_prefix}-s3-central-replication" #The assuming account matches it based upon name
-
-  custom_role_policy_arns = [
-    aws_iam_policy.s3_role_assumption.arn
-  ]
-
-  tags = {
-    "Name" = "${var.name_prefix}-s3-central-replication"
-  }
 }
 ```
 
