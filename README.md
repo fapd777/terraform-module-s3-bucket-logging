@@ -19,7 +19,7 @@ Create an `s3-bucket-logging.tf` file in the Terraform root directory with the f
 ################################################################################
 
 module "s3_bucket_logging" {
-  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git?ref=v1.0.0"
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git?ref=v20260508"
   name_prefix = var.aws_account_id
   name_suffix = var.region
 }
