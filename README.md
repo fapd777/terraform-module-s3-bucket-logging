@@ -19,7 +19,7 @@ Create an `s3-bucket-logging.tf` file in the Terraform root directory with the f
 ################################################################################
 
 module "s3_bucket_logging" {
-  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git?ref=v20260508"
+  source      = "git::https://github.com/fapd777/terraform-module-s3-bucket-logging.git?ref=v26.5.1"
   name_prefix = var.aws_account_id
   name_suffix = var.region
 }
@@ -32,14 +32,14 @@ Set the `ref` parameter at the end of the source URL with the latest version of 
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_s3_bucket.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_lifecycle_configuration.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_lifecycle_configuration) | resource |
 | [aws_s3_bucket_policy.bucket_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy) | resource |
@@ -51,7 +51,7 @@ Set the `ref` parameter at the end of the source URL with the latest version of 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_aws_s3_bucket_server_side_encryption_type"></a> [aws\_s3\_bucket\_server\_side\_encryption\_type](#input\_aws\_s3\_bucket\_server\_side\_encryption\_type) | Selection of the bucket encryption type | `string` | `"SSE_S3"` | no |
 | <a name="input_days_to_object_expiration"></a> [days\_to\_object\_expiration](#input\_days\_to\_object\_expiration) | Number of days before expiring data completely | `string` | `"2557"` | no |
 | <a name="input_enable_centralized_logging"></a> [enable\_centralized\_logging](#input\_enable\_centralized\_logging) | Enable support for centralized logging to a centralized logging account | `bool` | `false` | no |
@@ -71,7 +71,7 @@ Set the `ref` parameter at the end of the source URL with the latest version of 
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_bucket_arn"></a> [bucket\_arn](#output\_bucket\_arn) | outputs the full arn of the bucket created |
 | <a name="output_bucket_id"></a> [bucket\_id](#output\_bucket\_id) | outputs the id of the bucket created |
 
